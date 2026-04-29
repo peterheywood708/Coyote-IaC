@@ -14,9 +14,6 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .
     steps:
       - name: Get directory
         run: ls"
