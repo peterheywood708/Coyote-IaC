@@ -1,5 +1,12 @@
 locals {
-  ami      = "ami-0bc9640685b706689"
-  type     = "t2.micro"
-  name_tag = "My EC2 Instance"
+  sqsPolicyName         = "Cognito-SQS-Policy"
+  secretsPolicyName     = "secretsreadlist"
+  s3PolicyName          = "S3-ListReadWrite"
+  sqsName               = "transcriptionJobs"
+  sqsName1              = "labelJobs"
+  speechSecretName      = "prod/coyote/speech"
+  sqsSecretName         = "prod/coyote/sqs"
+  s3SecretName          = "prod/coyote/s3"
+  dbSecretName          = "prod/coyote/db"
+  coyoteAudioBucketName = "coyote-audio-s3"
 }
