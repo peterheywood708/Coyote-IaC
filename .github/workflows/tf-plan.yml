@@ -18,6 +18,8 @@ jobs:
       run:
         working-directory: ./terraform
     steps:
+      - name: Get directory
+        run: ls"
       - name: Checkout code
         uses: actions/checkout@v4
         with:
