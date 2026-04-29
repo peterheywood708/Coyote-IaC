@@ -53,3 +53,27 @@ resource "aws_cognito_user_pool" "coyote_user_pool" {
     case_sensitive = false
   }
 }
+
+resource "aws_cognito_user_pool_client" "coyote_app_client" {
+  name         = local.AppClientName
+  user_pool_id = aws_cognito_user_pool.coyote_user_pool.id
+  explicit_auth_flows = [
+    "ALLOW_REFRESH_TOKEN_AUTH",
+    "ALLOW_USER_SRP_AUTH",
+    "ALLOW_USER_AUTH",
+  ]
+  token_validity_units {
+    access_token  = "minutes"
+    id_token      = "minutes"
+    refresh_token = "days"
+  }
+  allowed_oauth_scopes         = ["email", "openid", "phone"]
+  default_redirect_uri         = var.defaultRedirectUri
+  callback_urls                = var.callbackUrls
+  allowed_oauth_flows          = ["code"]
+  access_token_validity        = 10
+  refresh_token_validity       = 5
+  id_token_validity            = 60
+  supported_identity_providers = ["COGNITO"]
+  enable_token_revocation      = true
+}

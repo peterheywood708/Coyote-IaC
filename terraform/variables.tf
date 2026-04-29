@@ -24,4 +24,15 @@ locals {
 
   # Cognito
   cognitoUserPoolName = "User pool - 5gxr5"
+  AppClientName       = "coyote"
+}
+
+variable "defaultRedirectUri" {
+  description = "Default redirect URL"
+  default     = "http://localhost:8080/"
+}
+
+variable "callbackUrls" {
+  description = "Callback urls to redirect to after authentication"
+  default     = ["http://localhost:8080/", "https://d84l1y8p4kdic.cloudfront.net"]
 }
