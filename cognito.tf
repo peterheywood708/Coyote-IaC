@@ -71,7 +71,7 @@ resource "aws_cognito_user_pool_client" "coyote_app_client" {
   default_redirect_uri         = var.defaultRedirectUri
   callback_urls                = var.callbackUrls
   allowed_oauth_flows          = ["code"]
-  access_token_validity        = 10
+  access_token_validity        = 15
   refresh_token_validity       = 5
   id_token_validity            = 60
   supported_identity_providers = ["COGNITO"]
