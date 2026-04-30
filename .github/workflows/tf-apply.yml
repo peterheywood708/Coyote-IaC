@@ -1,21 +1,26 @@
-name: Terraform Plan
+name: tf-apply
 
 on:
-  push:
-
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      aws_region:
+        description: "AWS Region"
+        required: true
+        default: ${{vars.AWS_REGION}}
 permissions: write-all
 
 jobs:
-  plan:
-    name: Terraform Plan
+  apply:
+    name: Deploy to AWS
+    runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: .
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
@@ -25,16 +30,9 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_OIDC_ROLE_ARN }}
           aws-region: ${{vars.AWS_REGION}}
-          role-session-name: TerraformPlanSession
+          role-session-name: TerraformApplySession
           role-skip-session-tagging: true
-
-      - name: Terraform plan
-        id: plan
-        uses: dflook/terraform-plan@v1
-        env:
-          add_github_comment: changes-only
-          TF_PLAN_COLLAPSE_LEVEL: 30
-
-      - name: Terraform Plan Status
-        if: steps.plan.outputs == 'failure'
-        run: exit 1
+      - name: Terraform Apply
+        uses: dflook/terraform-apply@v1
+        with:
+          auto_approve: false
