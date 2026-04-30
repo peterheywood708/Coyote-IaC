@@ -1,4 +1,4 @@
-name: tf-apply
+name: Terraform apply
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       aws_region:
         description: "AWS Region"
         required: true
-        default: ${{vars.AWS_REGION}}
+        default: "eu-west-2"
 permissions: write-all
 
 jobs:
